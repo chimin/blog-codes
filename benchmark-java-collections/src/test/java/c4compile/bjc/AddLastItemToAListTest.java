@@ -1,21 +1,24 @@
 package c4compile.bjc;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 import java.util.function.Supplier;
 
-public class Application {
-    public static void main(String[] args) {
-        System.out.println("Benchmark - Add last item");
-
+public class AddLastItemToAListTest {
+    @Test
+    public void test() {
         List<Integer> sizes = Arrays.asList(1000000, 2000000, 5000000, 10000000);
         for (int size : sizes) {
             List<Supplier<List<Integer>>> listSuppliers = Arrays.asList(
                     ArrayList::new,
                     () -> new ArrayList<>(size),
+                    () -> Collections.synchronizedList(new ArrayList<>()),
                     LinkedList::new,
                     Stack::new
             );
