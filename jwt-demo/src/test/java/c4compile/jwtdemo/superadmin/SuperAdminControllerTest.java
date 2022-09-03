@@ -20,7 +20,7 @@ class SuperAdminControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void getSuperAdminSomething_shouldReturnNotAuthenticated() {
+    public void getSuperAdminSomething_shouldReturnNotAuthenticated_whenNotUsingJwt() {
         ResponseEntity<String> response = testRestTemplate.getForEntity("/super-admin/something", String.class);
 
         assertEquals(401, response.getStatusCodeValue());

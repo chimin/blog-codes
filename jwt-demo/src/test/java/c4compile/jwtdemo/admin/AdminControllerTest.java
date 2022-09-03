@@ -20,8 +20,19 @@ class AdminControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void getAdminSomething_shouldReturnNotAuthenticated() {
+    public void getAdminSomething_shouldReturnNotAuthenticated_whenNotUsingJwt() {
         ResponseEntity<String> response = testRestTemplate.getForEntity("/admin/something", String.class);
+
+        assertEquals(401, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void getAdminSomething_shouldReturnNotAuthenticated_whenUsingInvalidJwt() {
+        ResponseEntity<String> response = testRestTemplate.exchange(
+                RequestEntity.get(URI.create("/admin/something"))
+                        .header("Authorization", "Bearer abc")
+                        .build(),
+                String.class);
 
         assertEquals(401, response.getStatusCodeValue());
     }
