@@ -1,4 +1,4 @@
-package c4compile.swaggercodegendemo;
+package c4compile.springdocdemo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +9,18 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class SwaggerTest {
+class MathControllerTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void swagger_shouldExist() {
-        ResponseEntity<String> response = testRestTemplate.getForEntity("/swagger.json", String.class);
+    public void divide_shouldSuccess() {
+        ResponseEntity<DivideResponse> response = testRestTemplate.postForEntity("/divide",
+                new DivideRequest().setDividend(10).setDivisor(3),
+                DivideResponse.class);
 
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
-        assertThat(response.getBody()).contains("swagger");
+        assertThat(response.getBody().getQuotient()).isEqualTo(3);
+        assertThat(response.getBody().getRemainder()).isEqualTo(1);
     }
 }

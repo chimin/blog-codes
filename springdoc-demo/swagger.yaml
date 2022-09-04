@@ -1,0 +1,55 @@
+openapi: 3.0.1
+info:
+  title: Calculator
+  version: 1.0.0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /divide:
+    post:
+      tags:
+      - math-controller
+      summary: Divide a number.
+      description: Divide a number.
+      operationId: divide
+      requestBody:
+        description: The dividend and divisor.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DivideRequest'
+        required: true
+      responses:
+        "200":
+          description: The quotient and remainder.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DivideResponse'
+components:
+  schemas:
+    DivideRequest:
+      type: object
+      properties:
+        dividend:
+          type: integer
+          description: The dividend.
+          format: int32
+        divisor:
+          type: integer
+          description: The divisor.
+          format: int32
+      description: ""
+    DivideResponse:
+      type: object
+      properties:
+        quotient:
+          type: integer
+          description: The quotient.
+          format: int32
+        remainder:
+          type: integer
+          description: The remainder.
+          format: int32
+      description: ""
