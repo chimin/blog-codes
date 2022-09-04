@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'io.swagger:swagger-codegen-cli:2.4.28'
+    }
+}
+
+sourceSets {
+    swaggerCodegen {
+        java {
+            srcDirs file("${buildDir}/generated/swaggerCodegen/src/main/java")
+        }
+    }
+}
+
+dependencies {
+    swaggerCodegenImplementation 'io.swagger:swagger-annotations:1.6.6'
+    swaggerCodegenImplementation 'org.springframework.boot:spring-boot-starter-web'
+    swaggerCodegenImplementation 'javax.validation:validation-api'
+
+    implementation sourceSets.swaggerCodegen.output
+}
+
+tasks.register('runSwaggerCodegen') {
+    def inputFile = file('src/main/resources/static/swagger.json')
+    def configFile = file('gradle/swagger-config.json')
+    def outputDirectory = file("${buildDir}/generated/swaggerCodegen")
+
+    inputs.files(inputFile, configFile)
+    outputs.dir(outputDirectory)
+
+    doLast {
+        outputDirectory.deleteDir()
+        outputDirectory.mkdirs()
+
+        io.swagger.codegen.SwaggerCodegen.main([
+                "generate",
+                "-i", inputFile.toString(),
+                "-o", outputDirectory.toString(),
+                "-c", configFile.toString(),
+                "-l", "spring"
+        ] as String[])
+    }
+}
+
+tasks.named('compileSwaggerCodegenJava') {
+    dependsOn 'runSwaggerCodegen'
+}

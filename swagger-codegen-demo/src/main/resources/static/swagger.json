@@ -1,0 +1,77 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Calculator"
+  },
+  "host": "localhost:8080",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/divide": {
+      "post": {
+        "summary": "Perform division on a number",
+        "description": "",
+        "operationId": "divide",
+        "tags": [
+          "math"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "request parameters",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DivideRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/DivideResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DivideRequest": {
+      "type": "object",
+      "properties": {
+        "dividend": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "divisor": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "DivideResponse": {
+      "type": "object",
+      "properties": {
+        "quotient": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "remainder": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}

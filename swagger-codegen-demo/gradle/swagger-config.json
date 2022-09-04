@@ -1,0 +1,10 @@
+{
+  "modelPackage": "c4compile.swaggercodegendemo.generated.models",
+  "apiPackage": "c4compile.swaggercodegendemo.generated.api",
+  "configPackage": "c4compile.swaggercodegendemo.generated.config",
+  "dateLibrary": "java8",
+  "interfaceOnly": true,
+  "defaultInterfaces": false,
+  "useTags": true,
+  "library": "spring-mvc"
+}
