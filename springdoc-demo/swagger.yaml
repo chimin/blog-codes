@@ -40,7 +40,7 @@ components:
           type: integer
           description: The divisor.
           format: int32
-      description: ""
+      description: Request for performing divison.
     DivideResponse:
       type: object
       properties:
@@ -52,4 +52,4 @@ components:
           type: integer
           description: The remainder.
           format: int32
-      description: ""
+      description: Response of performing division.
