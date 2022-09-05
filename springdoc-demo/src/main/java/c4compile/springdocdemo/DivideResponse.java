@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+/**
+ * Response of performing division.
+ */
 @Getter
 @Setter
 @Accessors(chain = true)

@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+/**
+ * Request for performing divison.
+ */
 @Getter
 @Setter
 @Accessors(chain = true)
