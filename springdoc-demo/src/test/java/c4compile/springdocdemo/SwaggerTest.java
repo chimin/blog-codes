@@ -30,7 +30,7 @@ class SwaggerTest {
             Files.writeString(localSwaggerFile, response.getBody());
         }
 
-        Path tempSwaggerFile = Paths.get("build", "tmp", "test", "swagger.yml");
+        Path tempSwaggerFile = Paths.get("build", "tmp", "test", "swagger.yaml");
         tempSwaggerFile.getParent().toFile().mkdirs();
         Files.writeString(tempSwaggerFile, response.getBody());
 
