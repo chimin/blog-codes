@@ -1,0 +1,5 @@
+server:
+  port: 9000
+
+math-api-client:
+  base-path: http://localhost:8080

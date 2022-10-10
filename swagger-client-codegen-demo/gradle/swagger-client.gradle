@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'io.swagger:swagger-codegen-cli:2.4.28'
+    }
+}
+
+sourceSets {
+    swaggerCodegenClient {
+        java {
+            srcDirs file("${buildDir}/generated/swaggerCodegenClient/src/main/java")
+        }
+    }
+}
+
+dependencies {
+    swaggerCodegenClientImplementation 'io.swagger:swagger-annotations:1.6.6'
+    swaggerCodegenClientImplementation 'org.springframework.boot:spring-boot-starter-web'
+    swaggerCodegenClientImplementation 'javax.validation:validation-api'
+
+    implementation sourceSets.swaggerCodegenClient.output
+}
+
+tasks.register('runSwaggerCodegenClient') {
+    def inputDirectory = file('src/main/swaggers')
+    def configFile = file('gradle/swagger-client-config.json')
+    def outputDirectory = file("${buildDir}/generated/swaggerCodegenClient")
+    def basePackageName = "c4compile.swaggerclientcodegendemo.generated"
+
+    inputs.files(inputDirectory)
+    inputs.files(configFile)
+    outputs.dir(outputDirectory)
+
+    doLast {
+        outputDirectory.deleteDir()
+        outputDirectory.mkdirs()
+
+        for (def inputFile : inputDirectory.listFiles()) {
+            def moduleName = inputFile.name.replaceFirst(/\..*$/, "")
+            io.swagger.codegen.SwaggerCodegen.main([
+                    "generate",
+                    "-i", inputFile.toString(),
+                    "-o", outputDirectory.toString(),
+                    "-c", configFile.toString(),
+                    "-l", "java",
+                    "--invoker-package", basePackageName,
+                    "--api-package", "${basePackageName}.${moduleName}.api",
+                    "--model-package", "${basePackageName}.${moduleName}.models"
+            ] as String[])
+        }
+    }
+}
+
+tasks.named('compileSwaggerCodegenClientJava') {
+    dependsOn 'runSwaggerCodegenClient'
+}
