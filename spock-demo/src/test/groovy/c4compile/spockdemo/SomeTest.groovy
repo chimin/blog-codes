@@ -6,13 +6,13 @@ class SomeTest extends Specification {
     def "convert should success"() {
         given:
             final currencyConversionRateProvider = Mock(CurrencyConversionRateProvider) {
-                getConversionRate("A") >> BigDecimal.valueOf(2)
-                getConversionRate("B") >> BigDecimal.valueOf(3)
+                getConversionRate("usd") >> BigDecimal.valueOf(2)
+                getConversionRate("myr") >> BigDecimal.valueOf(3)
             }
             final currencyConverter = new CurrencyConverter(currencyConversionRateProvider)
 
         when:
-            final result = currencyConverter.convert(BigDecimal.valueOf(amount), "A", "B")
+            final result = currencyConverter.convert(BigDecimal.valueOf(amount), "usd", "myr")
 
         then:
             result == BigDecimal.valueOf(expectedResult)
