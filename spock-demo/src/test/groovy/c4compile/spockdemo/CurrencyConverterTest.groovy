@@ -2,7 +2,7 @@ package c4compile.spockdemo
 
 import spock.lang.Specification
 
-class SomeTest extends Specification {
+class CurrencyConverterTest extends Specification {
     def "convert should success"() {
         given:
             final currencyConversionRateProvider = Mock(CurrencyConversionRateProvider) {
